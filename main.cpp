@@ -13,11 +13,14 @@ void p(PlayerCharacter& p1) {
     std::cout << "Intellect        : " << p1.getIntellect() << "\n";
     std::cout << "Current EXP      : " << p1.getCurrentEXP()
         << " / " << p1.getExpToNextLevel() << "\n";
+    std::cout << "Agility          :" << p1.getAgility() << "\n";
+    std::cout << "Armor            :" << p1.getArmor() << "\n";
+    std::cout << "ElementResistance:" << p1.getElementResistance() << "\n";
     std::cout << "==============================\n";
 }
 
 int main() {
-    PlayerCharacter p1(new Wizard());
+    PlayerCharacter p1(new Rogue());
 
     p(p1);
     p1.gainEXP(100u);

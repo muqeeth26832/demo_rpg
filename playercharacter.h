@@ -60,32 +60,33 @@ protected:
 #define PCCONSTRUCT : PlayerCharacterDelegate() { \
     HP->setMax(BASEHP); \
     HP->increaseCurrent(BASEHP); \
-    increaseStats(BASE_STRENGTH, BASE_INTELLECT); \
+    increaseStats(BASE_STRENGTH, BASE_INTELLECT,BASE_AGILITY); \
 }
 
 #define LEVELUP \
 void LevelUp() override { \
     HP->setMax((welltype)((BASEHP / 2.f) + HP->getMax())); \
     HP->increaseCurrent((welltype)(BASEHP / 2.f)); \
-    increaseStats((stattype)((BASE_STRENGTH + 1u) / 2.f), (stattype)((BASE_INTELLECT + 1u) / 2.f)); \
+    increaseStats((stattype)((BASE_STRENGTH + 1u) / 2.f), (stattype)((BASE_INTELLECT + 1u) / 2.f),(stattype)((BASE_AGILITY + 1u) / 2.f)); \
 }
 
-#define CHARACTERCLASS(classname, basehp, base_strength, base_intellect) \
+#define CHARACTERCLASS(classname, basehp, base_strength, base_intellect,base_agility) \
 class classname : public PlayerCharacterDelegate { \
 public: \
     static const welltype BASEHP = (welltype)(basehp); \
     static const stattype BASE_STRENGTH = (stattype)(base_strength); \
     static const stattype BASE_INTELLECT = (stattype)(base_intellect); \
+	static const stattype BASE_AGILITY = (stattype)(base_agility); \
     std::string getClassName() override { return std::string(#classname); } \
     classname() PCCONSTRUCT \
     LEVELUP \
 };
 
-CHARACTERCLASS(Cleric, 14, 3, 5)
-CHARACTERCLASS(Wizard, 10, 1, 8)
-CHARACTERCLASS(Warrior, 20, 5, 2)
-CHARACTERCLASS(Rogue, 14, 4, 4)
-CHARACTERCLASS(Berserker, 22, 6,1)
+CHARACTERCLASS(Cleric, 14, 3, 5,1)
+CHARACTERCLASS(Wizard, 10, 1, 8,1)
+CHARACTERCLASS(Warrior, 18, 5, 2,2)
+CHARACTERCLASS(Rogue, 14, 3, 3,5)
+
 
 class PlayerCharacter  {
 private:
@@ -104,6 +105,9 @@ public:
 	welltype getMaxHP() { return pcclass->HP->getMax(); }
 	stattype getStrength() { return pcclass->getStrength(); }
 	stattype getIntellect() { return pcclass->getIntellect(); }
+	stattype getAgility() { return pcclass->getAgility(); }
+	stattype getArmor() { return pcclass->getArmor(); }
+	stattype getElementResistance() { return pcclass->getElementResistance(); }
 
 	void gainEXP(exptype amount) {  pcclass->gainEXP(amount); }
 	void takeDamage(welltype damage) { pcclass->HP->reduceCurrent(damage); }
